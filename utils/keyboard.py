@@ -124,11 +124,25 @@ KEYMAP = {
     # pygame.K_RECORD: 2089,
 }
 COMMON_REFIX = 'hdc shell uinput -K '
+pressed = {key: False for key in KEYMAP.keys()}
+pressed_cnt = 0
 
 
 def handleKeyDown(key):
-    os.system(COMMON_REFIX + f' -d {KEYMAP.get(key, -1)}')
+    global pressed_cnt
+    pressed[key] = True
+    pressed_cnt += 1
+    # os.system(COMMON_REFIX + f' -d {KEYMAP.get(key, -1)}')
 
 
 def handleKeyUp(key):
-    os.system(COMMON_REFIX + f' -u {KEYMAP.get(key, -1)}')
+    global pressed_cnt
+    if pressed_cnt == 0 or not pressed[key]:
+        return
+
+    command = " ".join([f"-d {KEYMAP.get(key, -1)}" for key, value in pressed.items()
+                        if value]) + f" -u {KEYMAP.get(key, -1)}"
+    print(COMMON_REFIX + command)
+    os.system(COMMON_REFIX + command)
+    pressed[key] = False
+    pressed_cnt -= 1
