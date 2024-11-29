@@ -1,6 +1,7 @@
 import pygame
 import sys
-import os
+import utils.mouse as mouse
+import utils.keyboard as keyboard
 
 # 初始化 Pygame
 pygame.init()
@@ -20,18 +21,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            print(f"Key pressed: {event.key}")
+            print(f"Key pressed: {pygame.key.name(event.key)}")
             if event.key == pygame.K_q:
                 running = False
+            keyboard.handleKeyDown(event.key)
+
+        elif event.type == pygame.KEYUP:
+            print(f"Key released: {pygame.key.name(event.key)}")
+            keyboard.handleKeyUp(event.key)
         elif event.type == pygame.MOUSEMOTION:
             print(f"Mouse moved to {event.pos}")
-            os.system(f'hdc shell uinput -M -m {event.pos[0]} {event.pos[1]}')
+            mouse.handleMouseMove(event.pos[0], event.pos[1])
         elif event.type == pygame.MOUSEBUTTONDOWN:
             print(f"Mouse button {event.button} pressed at {event.pos}")
-            os.system(
-                f'hdc shell uinput -M -g {event.pos[0]} {event.pos[1]} {event.pos[0]} {event.pos[1]} 1')
-        # elif event.type == pygame.MOUSEBUTTONUP:
-        #     print(f"Mouse button {event.button} released at {event.pos}")
+            mouse.handleMouseDown(event.pos[0], event.pos[1], event.button)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            print(f"Mouse button {event.button} released at {event.pos}")
+            mouse.handleMouseUp(event.pos[0], event.pos[1], event.button)
 
     # 填充背景颜色
     screen.fill((255, 255, 255))
