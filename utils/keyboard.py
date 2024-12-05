@@ -140,8 +140,8 @@ def handleKeyUp(key):
     if pressed_cnt == 0 or not pressed[key]:
         return
 
-    command = " ".join([f"-d {KEYMAP.get(key, -1)}" for key, value in pressed.items()
-                        if value]) + f" -u {KEYMAP.get(key, -1)}"
+    command = " ".join([f"-d {KEYMAP.get(k, -1)}" for k, value in pressed.items()
+                        if value and k != key]) + f" -d {KEYMAP.get(key, -1)}" + f" -u {KEYMAP.get(key, -1)}"
     print(COMMON_REFIX + command)
     os.system(COMMON_REFIX + command)
     pressed[key] = False
