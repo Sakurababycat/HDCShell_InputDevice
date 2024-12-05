@@ -1,10 +1,12 @@
 import os
+import pygame
+
 
 COMMON_REFIX = 'hdc shell uinput -M '
 MOUSEBUTTON_MAP = {
-    1: 0,
-    2: 2,
-    3: 1
+    pygame.BUTTON_LEFT: 0,
+    pygame.BUTTON_MIDDLE: 2,
+    pygame.BUTTON_RIGHT: 1,
 }
 
 

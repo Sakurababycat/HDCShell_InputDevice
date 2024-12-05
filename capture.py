@@ -7,7 +7,7 @@ import utils.keyboard as keyboard
 pygame.init()
 
 # 设置窗口大小
-window_size = (1920, 1080)
+window_size = (2340, 1080)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Mouse and Keyboard Event Capture")
 
